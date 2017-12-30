@@ -27,6 +27,11 @@
   "homepage": "https://github.com/vivek-26/node-chat#readme",
   "dependencies": {
     "debug": "^3.1.0",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1"
   }
 }
