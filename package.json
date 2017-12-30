@@ -1,0 +1,32 @@
+{
+  "name": "node-chat",
+  "version": "1.0.0",
+  "description": "A simple chat application using Socket.io",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "8.7.0",
+    "npm": "5.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vivek-26/node-chat.git"
+  },
+  "keywords": [
+    "Socket.io",
+    "Node.js"
+  ],
+  "author": "Vivek Kumar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vivek-26/node-chat/issues"
+  },
+  "homepage": "https://github.com/vivek-26/node-chat#readme",
+  "dependencies": {
+    "debug": "^3.1.0",
+    "express": "^4.16.2"
+  }
+}
