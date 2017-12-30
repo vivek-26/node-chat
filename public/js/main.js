@@ -11,12 +11,6 @@ socket.on('disconnect', () => {
     console.log('Disconnected from Server!');
 });
 
-// Emit new message event
-socket.emit('createMessage', {
-    'from': 'vivek@example.com',
-    'text': 'Hey, buddy check on bitcoins!'
-});
-
 // Listen for new message event
 socket.on('newMessage', (message) => {
     console.log('New Message Received - ', message);

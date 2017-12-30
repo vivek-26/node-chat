@@ -31,16 +31,16 @@ io.on('connection', (socket) => {
         debug(`Disconnected from client`);
     });
 
-    // Emit new message event
-    socket.emit('newMessage', {
-        'from': 'vivek@example.com',
-        'text': 'Hey, buy bitcoins buddy!',
-        'createdAt': '15:42'
-    });
-
+    // socket.emit() emits to a single connection
     // Listen to create message event
     socket.on('createMessage', (message) => {
         console.log('Create Message - ', message);
+        // io.emit() emits to all connections
+        io.emit('newMessage', {
+            'from': message.from,
+            'text': message.text,
+            'createdAt': new Date().getTime()
+        });
     });
 });
 
