@@ -31,10 +31,29 @@ io.on('connection', (socket) => {
         debug(`Disconnected from client`);
     });
 
-    // socket.emit() emits to a single connection
+    /** IMPORTANT - .emit() rules
+     * socket.emit() emits to a single connection
+     * io.emit() emits to all connections
+     * socket.broadcast() emits to all connections except itself
+     */
+
+    // Admin says hello
+    socket.emit('newMessage', {
+        'from': 'Admin',
+        'text': 'Welcome to the chat app!',
+        'createdAt': new Date().getTime()
+    });
+
+    // Broadcast the arrival of a new user to all other users
+    socket.broadcast.emit('newMessage', {
+        'from': 'Admin',
+        'text': 'New User Joined!',
+        'createdAt': new Date().getTime()
+    });
+
     // Listen to create message event
     socket.on('createMessage', (message) => {
-        console.log('Create Message - ', message);
+        debug('Create Message - ', message);
         // io.emit() emits to all connections
         io.emit('newMessage', {
             'from': message.from,
