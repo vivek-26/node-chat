@@ -25,6 +25,11 @@ const io = socketIO(server);
 // Listen for a new connection, 'socket' param represents individual socket.
 io.on('connection', (socket) => {
     debug('New user connected');
+
+    // Listen for disconnect event
+    socket.on('disconnect', () => {
+        debug(`Disconnected from client`);
+    });
 });
 
 // Serve static files
