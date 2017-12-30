@@ -30,6 +30,18 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         debug(`Disconnected from client`);
     });
+
+    // Emit new message event
+    socket.emit('newMessage', {
+        'from': 'vivek@example.com',
+        'text': 'Hey, buy bitcoins buddy!',
+        'createdAt': '15:42'
+    });
+
+    // Listen to create message event
+    socket.on('createMessage', (message) => {
+        console.log('Create Message - ', message);
+    });
 });
 
 // Serve static files
