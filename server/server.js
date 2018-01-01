@@ -57,6 +57,29 @@ io.on('connection', (socket) => {
     });
 });
 
+// If in 'production' mode, don't run webpack hot middleware.
+if (process.env.NODE_ENV !== 'production') {
+    (function () {
+        // Step 1: Create & configure a webpack compiler
+        const webpack = require('webpack');
+        const webpackConfig = require('../webpack.config');
+        const compiler = webpack(webpackConfig);
+
+        // Step 2: Attach the dev middleware to the compiler & server
+        app.use(require('webpack-dev-middleware')(compiler, {
+            noInfo: true,
+            publicPath: webpackConfig.output.publicPath
+        }));
+
+        // Step 3: Attach the hot middleware to the compiler & server
+        app.use(require('webpack-hot-middleware')(compiler, {
+            // log: console.log,
+            path: '/__webpack_hmr',
+            heartbeat: 10 * 1000
+        }));
+    })();
+}
+
 // Serve static files
 app.use(express.static(publicPath));
 
