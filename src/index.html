@@ -10,10 +10,14 @@
 
 <body>
     <p>Welcome to the Chat App!</p>
-    <div>
-        <img src="img/index.jpg" alt="Webpack Image">
-    </div>
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
+
+    <ol id="messages"></ol>
+
+    <form id="message-form">
+        <label for="message"></label>
+        <input type="text" name="message" id="message" placeholder="Message">
+        <button>Send</button>
+    </form>
 </body>
 
 </html>
