@@ -1,4 +1,6 @@
 import '../css/main.css';
+import io from 'socket.io-client';
+import Rx from 'rxjs';
 
 // Initiate a request (Socket.io) - Open a new websocket and keep that open.
 var socket = io();
