@@ -4,12 +4,11 @@
   "description": "A simple chat application using Socket.io",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build-prod && npm run prod",
+    "start": "npm run prod",
     "test": "jest server/**/*.test.js",
     "testWatch": "nodemon --exec 'npm test'",
     "dev": "nodemon --watch server server/server.js",
-    "build-prod": "export NODE_ENV=development && npm install --dev",
-    "prod": "export NODE_ENV=production && webpack -p && node server/server.js"
+    "prod": "webpack -p && node server/server.js"
   },
   "engines": {
     "node": "8.7.0",
