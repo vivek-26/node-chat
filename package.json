@@ -8,7 +8,7 @@
     "test": "jest server/**/*.test.js",
     "testWatch": "nodemon --exec 'npm test'",
     "dev": "nodemon --watch server server/server.js",
-    "build-prod": "export NODE_ENV=development && npm install",
+    "build-prod": "export NODE_ENV=development && npm install --dev",
     "prod": "export NODE_ENV=production && webpack -p && node server/server.js"
   },
   "engines": {
