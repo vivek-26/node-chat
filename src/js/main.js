@@ -37,3 +37,25 @@ formSubmit$.subscribe({
     error: (err) => console.log('Oops an error occurred. Details - ', err),
     complete: () => console.log('Completed!')
 });
+
+// Handle Send Location Button Click Event
+const locationButton$ = Rx.Observable.fromEvent(document.querySelector('.send-location'), 'click');
+locationButton$.subscribe({
+    next: (event) => {
+        // Check if Geolocation is available
+        if (navigator.geolocation) {
+            return alert('Geolocation Not Supported by Browser!');
+        }
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            socket.emit('createLocationMessage', {
+                'latitude': position.coords.latitude,
+                'longitude': position.coords.longitude
+            });
+        }, () => {
+            alert('Unable to fetch location!')
+        });
+    },
+    error: (err) => console.log('Oops an error occurred. Details - ', err),
+    complete: () => console.log('Completed!')
+});

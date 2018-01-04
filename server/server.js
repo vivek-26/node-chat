@@ -55,6 +55,12 @@ io.on('connection', (socket) => {
         // io.emit() emits to all connections
         io.emit('newMessage', generateMessage(message.from, message.text));
     });
+
+    // Listen to create location message event
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newMessage', generateMessage('Admin',
+            `${coords.latitude}, ${coords.longitude}`));
+    });
 });
 
 // If in 'production' mode, don't run webpack hot middleware.
