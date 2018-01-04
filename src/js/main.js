@@ -43,7 +43,7 @@ const locationButton$ = Rx.Observable.fromEvent(document.querySelector('.send-lo
 locationButton$.subscribe({
     next: (event) => {
         // Check if Geolocation is available
-        if (navigator.geolocation) {
+        if (!navigator.geolocation) {
             return alert('Geolocation Not Supported by Browser!');
         }
 
