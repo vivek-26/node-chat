@@ -1,7 +1,8 @@
 // Test Dependencies
 const expect = require('expect');
 const {
-    generateMessage
+    generateMessage,
+    generateLocationMessage
 } = require('./message');
 
 describe('Generate Message', () => {
@@ -15,5 +16,19 @@ describe('Generate Message', () => {
             from,
             text
         });
+    });
+});
+
+describe('Generate Location Message', () => {
+    it('should generate correct location object', () => {
+        const from = 'Andrea';
+        const latitude = 1;
+        const longitude = 1;
+        const locationMessage = generateLocationMessage(from, latitude, longitude);
+
+        expect(typeof locationMessage.from).toBe('string');
+        expect(typeof locationMessage.createdAt).toBe('number');
+        expect(typeof locationMessage.url).toBe('string');
+        expect(locationMessage.url).toBe('https://www.google.com/maps?q=1,1');
     });
 });

@@ -6,7 +6,8 @@ const http = require('http');
 const path = require('path');
 
 const {
-    generateMessage
+    generateMessage,
+    generateLocationMessage
 } = require('./utils/message');
 
 // Public path - static files
@@ -58,8 +59,8 @@ io.on('connection', (socket) => {
 
     // Listen to create location message event
     socket.on('createLocationMessage', (coords) => {
-        io.emit('newMessage', generateMessage('Admin',
-            `${coords.latitude}, ${coords.longitude}`));
+        io.emit('newLocationMessage', generateLocationMessage('Admin',
+            coords.latitude, coords.longitude));
     });
 });
 

@@ -24,6 +24,19 @@ socket.on('newMessage', (message) => {
     ol.appendChild(li);
 });
 
+// Listen for new location message
+socket.on('newLocationMessage', (message) => {
+    const ol = document.querySelector('#messages');
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.setAttribute('target', '_blank');
+    a.innerHTML = 'My Current Location';
+    a.setAttribute('href', message.url);
+    li.appendChild(document.createTextNode(`${message.from}: `));
+    li.appendChild(a);
+    ol.appendChild(li);
+});
+
 // Handle form submit
 const formSubmit$ = Rx.Observable.fromEvent(document.querySelector('#message-form'), 'submit');
 formSubmit$.subscribe({
