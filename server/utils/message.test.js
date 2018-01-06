@@ -11,7 +11,6 @@ describe('Generate Message', () => {
         const text = 'Chat Application';
         const message = generateMessage(from, text);
 
-        expect(typeof message.createdAt).toBe('number');
         expect(message).toMatchObject({
             from,
             text
@@ -27,7 +26,6 @@ describe('Generate Location Message', () => {
         const locationMessage = generateLocationMessage(from, latitude, longitude);
 
         expect(typeof locationMessage.from).toBe('string');
-        expect(typeof locationMessage.createdAt).toBe('number');
         expect(typeof locationMessage.url).toBe('string');
         expect(locationMessage.url).toBe('https://www.google.com/maps?q=1,1');
     });
