@@ -8,18 +8,25 @@
     <title>Node.js Chat Application</title>
 </head>
 
-<body>
-    <p>Welcome to the Chat App!</p>
+<body class="chat">
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="users"></div>
+    </div>
 
-    <ol id="messages"></ol>
+    <div class="chat__main">
+        <ol id="messages" class="chat__messages"></ol>
 
-    <form id="message-form">
-        <label for="message"></label>
-        <input type="text" name="message" id="message" placeholder="Message">
-        <button>Send</button>
-    </form>
+        <div class="chat__footer">
+            <form id="message-form">
+                <label for="message"></label>
+                <input type="text" name="message" id="message" placeholder="Message" autofocus autocomplete="off">
+                <button>Send</button>
+            </form>
 
-    <button class="send-location">Send Location</button>
+            <button class="send-location">Send Location</button>
+        </div>
+    </div>
 </body>
 
 </html>

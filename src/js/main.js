@@ -45,7 +45,9 @@ formSubmit$.subscribe({
         socket.emit('createMessage', {
             'from': 'User',
             'text': document.querySelector('#message').value
-        }, () => {});
+        }, () => {
+            document.querySelector('#message').value = '';
+        });
     },
     error: (err) => console.log('Oops an error occurred. Details - ', err),
     complete: () => console.log('Completed!')
@@ -60,12 +62,21 @@ locationButton$.subscribe({
             return alert('Geolocation Not Supported by Browser!');
         }
 
+        // Disable the button && change text
+        document.querySelector('.send-location').setAttribute('disabled', 'disabled');
+        document.querySelector('.send-location').textContent = 'Sending Location ...';
+
         navigator.geolocation.getCurrentPosition((position) => {
+            // Enable the button & change text
+            document.querySelector('.send-location').removeAttribute('disabled');
+            document.querySelector('.send-location').textContent = 'Send Location';
             socket.emit('createLocationMessage', {
                 'latitude': position.coords.latitude,
                 'longitude': position.coords.longitude
             });
         }, () => {
+            document.querySelector('.send-location').removeAttribute('disabled');
+            document.querySelector('.send-location').textContent = 'Send Location';
             alert('Unable to fetch location!')
         });
     },

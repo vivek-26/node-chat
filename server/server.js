@@ -51,10 +51,11 @@ io.on('connection', (socket) => {
         'New User Joined!'));
 
     // Listen to create message event
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         debug('Create Message - ', message);
         // io.emit() emits to all connections
         io.emit('newMessage', generateMessage(message.from, message.text));
+        callback();
     });
 
     // Listen to create location message event
