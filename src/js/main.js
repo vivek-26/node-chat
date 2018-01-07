@@ -29,6 +29,7 @@ socket.on('newMessage', (message) => {
     const div = document.createElement('div');
     div.innerHTML = html;
     ol.appendChild(div.firstElementChild);
+    scrollToBottom();
 });
 
 // Listen for new location message
@@ -44,6 +45,7 @@ socket.on('newLocationMessage', (message) => {
     const div = document.createElement('div');
     div.innerHTML = html;
     ol.appendChild(div.firstElementChild);
+    scrollToBottom();
 });
 
 // Handle form submit
@@ -92,3 +94,26 @@ locationButton$.subscribe({
     error: (err) => console.log('Oops an error occurred. Details - ', err),
     complete: () => console.log('Completed!')
 });
+
+// Handle Autoscrolling
+function scrollToBottom() {
+    // Selectors
+    const messages = document.querySelector('#messages');
+    const newMessage = document.querySelector('#messages li:last-child');
+    const prevNewMessage = document.querySelector('#messages li:nth-last-child(2)');
+
+    // Heights
+    const clientHeight = messages.clientHeight || 0;
+    const scrollTop = messages.scrollTop;
+    const scrollHeight = messages.scrollHeight;
+    const newMessageHeight = newMessage.clientHeight || 0;
+    var prevNewMessageHeight = 0;
+    if (prevNewMessage) {
+        prevNewMessageHeight = prevNewMessage.clientHeight;
+    }
+
+    // Logic
+    if (clientHeight + scrollTop + newMessageHeight + prevNewMessageHeight >= scrollHeight) {
+        messages.scrollTop = scrollHeight;
+    }
+};
