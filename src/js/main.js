@@ -20,23 +20,30 @@ socket.on('newMessage', (message) => {
     const formattedTime = moment(message.createdAt).format('h:mm a');
     console.log('New Message Received - ', message);
     const ol = document.querySelector('#messages');
-    const li = document.createElement('li');
-    li.appendChild(document.createTextNode(`${message.from} ${formattedTime}: ${message.text}`));
-    ol.appendChild(li);
+    const template = document.querySelector('#message-template').innerHTML;
+    const html = Mustache.render(template, {
+        'text': message.text,
+        'from': message.from,
+        'createdAt': formattedTime
+    });
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    ol.appendChild(div.firstElementChild);
 });
 
 // Listen for new location message
 socket.on('newLocationMessage', (message) => {
     const formattedTime = moment(message.createdAt).format('h:mm a');
     const ol = document.querySelector('#messages');
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.setAttribute('target', '_blank');
-    a.innerHTML = 'My Current Location';
-    a.setAttribute('href', message.url);
-    li.appendChild(document.createTextNode(`${message.from} ${formattedTime}: `));
-    li.appendChild(a);
-    ol.appendChild(li);
+    const template = document.querySelector('#location-message-template').innerHTML;
+    const html = Mustache.render(template, {
+        'url': message.url,
+        'from': message.from,
+        'createdAt': formattedTime
+    });
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    ol.appendChild(div.firstElementChild);
 });
 
 // Handle form submit
