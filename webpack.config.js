@@ -4,19 +4,17 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const extractPlugin = new ExtractTextPlugin({
-    filename: 'main.css'
+    filename: '[name].css'
 });
 
 const path = require('path');
 
 // Webpack Config
 module.exports = {
-    entry: [
-        // Add the client which connects to our middleware
-        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-        // Now add the actual application
-        './src/js/main.js'
-    ],
+    entry: {
+        'join-page': './src/js/index.js',
+        'chat': './src/js/main.js'
+    },
     output: {
         // Output path is absolute.
         path: path.resolve(__dirname, 'public'),
@@ -69,10 +67,15 @@ module.exports = {
          */
         new CleanWebpackPlugin(['public']),
         new HtmlWebpackPlugin({
-            template: 'src/index.html'
+            filename: 'index.html',
+            template: 'src/index.html',
+            chunks: ['join-page']
         }),
-        extractPlugin,
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        new HtmlWebpackPlugin({
+            filename: 'chat.html',
+            template: 'src/chat.html',
+            chunks: ['chat']
+        }),
+        extractPlugin
     ]
 };
