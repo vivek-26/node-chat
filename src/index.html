@@ -5,11 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Chat | Join Page</title>
+    <title>Node Chat | Join Page</title>
 </head>
 
-<body>
-    <p>Chat App Join Page</p>
+<body class="centered-form">
+    <div class="centered-form__form">
+        <form action="/chat.html">
+            <div class="form-field">
+                <h3>Join a Chat</h3>
+            </div>
+            <div class="form-field">
+                <label for="displayName">Display Name</label>
+                <input type="text" name="name" id="displayName" autofocus>
+            </div>
+            <div class="form-field">
+                <label for="roomName">Room Name</label>
+                <input type="text" name="room" id="roomName">
+            </div>
+            <div class="form-field">
+                <button>Join</button>
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>
