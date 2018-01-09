@@ -19,7 +19,7 @@ describe('Generate Message', () => {
 });
 
 describe('Generate Location Message', () => {
-    it('should generate correct location object', () => {
+    test('should generate correct location object', () => {
         const from = 'Andrea';
         const latitude = 1;
         const longitude = 1;
