@@ -8,6 +8,24 @@ var socket = io();
 // Listen for connect event
 socket.on('connect', () => {
     console.log('Connected to Server!');
+
+    let params = {};
+    window.location.search.replace(
+        new RegExp('([^?=&]+)(=([^&#]*))?', 'g'),
+        function ($0, $1, $2, $3) {
+            params[$1] = decodeURIComponent($3.replace(/\+/g, '%20'));
+        }
+    );
+    console.log('Query Params: ', params);
+
+    socket.emit('join', params, (err) => {
+        if (err) {
+            alert(err);
+            window.location.href = '/';
+        } else {
+            console.log('No error');
+        }
+    });
 });
 
 // Listen for disconnect event

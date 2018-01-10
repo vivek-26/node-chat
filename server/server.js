@@ -10,6 +10,10 @@ const {
     generateLocationMessage
 } = require('./utils/message');
 
+const {
+    isRealString
+} = require('./utils/validation');
+
 // Public path - static files
 const publicPath = path.join(__dirname, '../public');
 debug(`Static Folder Path - ${publicPath}`);
@@ -42,13 +46,23 @@ io.on('connection', (socket) => {
      * socket.broadcast() emits to all connections except itself
      */
 
-    // Admin says hello
-    socket.emit('newMessage', generateMessage('Admin',
-        'Welcome to the chat app!'));
+    // Join Event Listener
+    socket.on('join', (params, callback) => {
+        if (!isRealString(params.name) || !isRealString(params.room)) {
+            return callback('Name and Room name are required!');
+        }
 
-    // Broadcast the arrival of a new user to all other users
-    socket.broadcast.emit('newMessage', generateMessage('Admin',
-        'New User Joined!'));
+        socket.join(params.room);
+        // socket.leave(string)
+        // Admin says hello
+        socket.emit('newMessage', generateMessage('Admin',
+            'Welcome to the chat app!'));
+
+        // Broadcast the arrival of a new user to all other users
+        socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin',
+            `${params.name} has joined!`));
+        callback();
+    });
 
     // Listen to create message event
     socket.on('createMessage', (message, callback) => {
