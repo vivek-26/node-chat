@@ -87,15 +87,25 @@ io.on('connection', (socket) => {
     // Listen to create message event
     socket.on('createMessage', (message, callback) => {
         debug('Create Message - ', message);
+        const user = users.getUser(socket.id);
+
+        // Check if user exists
+        if (user && isRealString(message.text)) {
+            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+        }
         // io.emit() emits to all connections
-        io.emit('newMessage', generateMessage(message.from, message.text));
         callback();
     });
 
     // Listen to create location message event
     socket.on('createLocationMessage', (coords) => {
-        io.emit('newLocationMessage', generateLocationMessage('Admin',
-            coords.latitude, coords.longitude));
+        const user = users.getUser(socket.id);
+
+        // Check if user exists
+        if (user) {
+            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name,
+                coords.latitude, coords.longitude));
+        }
     });
 });
 

@@ -88,7 +88,6 @@ formSubmit$.subscribe({
     next: (event) => {
         event.preventDefault();
         socket.emit('createMessage', {
-            'from': 'User',
             'text': document.querySelector('#message').value
         }, () => {
             document.querySelector('#message').value = '';
