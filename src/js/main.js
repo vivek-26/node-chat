@@ -33,6 +33,22 @@ socket.on('disconnect', () => {
     console.log('Disconnected from Server!');
 });
 
+// Listen for update user list event
+socket.on('updateUserList', (users) => {
+    console.log('Users List', users);
+    const ol = document.createElement('ol');
+    users.forEach((user) => {
+        const li = document.createElement('li');
+        const userName = document.createTextNode(user);
+        li.appendChild(userName);
+        ol.appendChild(li);
+
+        const peopleDiv = document.querySelector('#users');
+        peopleDiv.innerHTML = '';
+        peopleDiv.appendChild(ol);
+    });
+});
+
 // Listen for new message event
 socket.on('newMessage', (message) => {
     const formattedTime = moment(message.createdAt).format('h:mm a');

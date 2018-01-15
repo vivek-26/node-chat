@@ -14,6 +14,10 @@ const {
     isRealString
 } = require('./utils/validation');
 
+const {
+    Users
+} = require('./utils/users');
+
 // Public path - static files
 const publicPath = path.join(__dirname, '../public');
 debug(`Static Folder Path - ${publicPath}`);
@@ -31,6 +35,9 @@ const server = http.createServer(app);
 // Create WebSocket Server
 const io = socketIO(server);
 
+// User List
+var users = new Users();
+
 // Listen for a new connection, 'socket' param represents individual socket.
 io.on('connection', (socket) => {
     debug('New user connected');
@@ -38,6 +45,13 @@ io.on('connection', (socket) => {
     // Listen for disconnect event
     socket.on('disconnect', () => {
         debug(`Disconnected from client`);
+        var user = users.removeUser(socket.id);
+
+        if (user) {
+            io.to(user.room).emit('updateUserList', users.getUserList(user.room));
+            io.to(user.room).emit('newMessage', generateMessage('Admin',
+                `${user.name} has left the room.`));
+        }
     });
 
     /** IMPORTANT - .emit() rules
@@ -53,6 +67,12 @@ io.on('connection', (socket) => {
         }
 
         socket.join(params.room);
+
+        // Add the user
+        users.removeUser(socket.id);
+        users.addUser(socket.id, params.name, params.room);
+        io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+
         // socket.leave(string)
         // Admin says hello
         socket.emit('newMessage', generateMessage('Admin',
